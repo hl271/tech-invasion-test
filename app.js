@@ -19,7 +19,7 @@ admin.initializeApp({
   })
 
 app.use(express.static('public'))
-app.use(favicon(__dirname + '/public/img/favicon.ico'))
+app.use(favicon('/img/favicon.ico'))
 app.set('views', './view')
 app.set('view engine', 'ejs')
 app.use(cors);

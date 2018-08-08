@@ -1,6 +1,6 @@
 require('dotenv').config()
 let express = require('express')
-let favicon = require('serve-favicon')
+// let favicon = require('serve-favicon')
 let admin = require('firebase-admin')
 const cookieParser = require('cookie-parser')();
 const cors = require('cors')({origin: true});
@@ -19,7 +19,7 @@ admin.initializeApp({
   })
 
 app.use(express.static('public'))
-app.use(favicon('/img/favicon.ico'))
+// app.use(favicon('/img/favicon.ico'))
 app.set('views', './view')
 app.set('view engine', 'ejs')
 app.use(cors);

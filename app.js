@@ -2,6 +2,7 @@ require('dotenv').config()
 let express = require('express')
 // let favicon = require('serve-favicon')
 let admin = require('firebase-admin')
+const QRCode = require('qrcode')
 const cookieParser = require('cookie-parser')();
 const cors = require('cors')({origin: true});
 
@@ -49,7 +50,7 @@ const validateFirebaseIdToken = async (req, res, next) => {
       idToken = req.cookies.__session;
     } else {
       // No cookie
-      res.status(403).send('Unauthorized');
+      res.redirect("/");
       return;
     }
   
@@ -64,6 +65,7 @@ const validateFirebaseIdToken = async (req, res, next) => {
     }
 };
 
+
 app.get('/', (req, res) => {
     res.render('index')
 })
@@ -76,5 +78,16 @@ app.get('/protect', validateFirebaseIdToken, (req, res) => {
 app.get('/private', validateFirebaseIdToken, (req, res) => {
   res.render("protect")
   console.log("PRIVATE: ",req.user)
+})
+
+app.get('/ticket', validateFirebaseIdToken, (req, res) => {
+  QRCode.toDataURL(req.user.user_id, {width: '200px'}, (error, url) => {
+    console.log(req.user.user_id)
+    res.render("ticket", {
+      imgURL: url,
+      user: req.user
+    })
+  }) 
+  // res.render("ticket") 
 })
 app.listen(port, function() {console.log('Server start at port '+port)})

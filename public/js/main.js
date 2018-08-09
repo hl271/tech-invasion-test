@@ -40,7 +40,6 @@ let signedOutUi = function() {
 }
 
 let signedInUi = function(displayName, photoURL) {
-  document.getElementById('sign-in').innerHTML = '<button onClick="signOut()" class="waves-effect waves-light btn">Sign out</button>'
   navMainProfile.innerHTML =`<img src="${photoURL}" alt="${displayName}" class="profile circle responsive-img">`
   navSideProfileImg.innerHTML = `<img src="${photoURL}" alt="${displayName}" class="profile circle responsive-img right">`
   navSideProfileName.innerHTML = displayName
@@ -86,6 +85,7 @@ function signOut() {
     firebase.auth().signOut();
     // clear the __session cookie
     document.cookie = '__session=';
+    window.localStorage.setItem('currentUser', null)
     window.location.reload(true)
 }
 
@@ -93,6 +93,7 @@ initApp = function() {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
+        window.localStorage.setItem('currentUser', JSON.stringify(user))
         var displayName = user.displayName;
         var email = user.email;
         var emailVerified = user.emailVerified;

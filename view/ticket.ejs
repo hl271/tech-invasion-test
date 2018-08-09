@@ -13,7 +13,7 @@
 	<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"  media="screen,projection"/>
     <style>
         .qr-container {
-            margin: 10px;
+            margin: 20px;
             border-radius: 5px;
             border: 1px solid #e2e2e2;
         }
@@ -28,6 +28,33 @@
         .qr-container .body .col {
             height: 100%;
         }
+        img.profile {
+			width: 40px;
+			height: 40px;
+			vertical-align: middle;
+		}
+		.nav-main--profile {
+			padding-left: 0.75rem;
+			padding-right: 0.75rem;
+		}
+		/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+		.dropdown-container.nav-side {
+			display: none;
+			padding-left: 8px;
+		}
+		.dropdown-container.nav-main {
+			display: none;
+			position: absolute;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			z-index: 1;
+			right: 0;
+		}
+		.dropdown-container a:hover {background-color: #ddd;}
+		/* Show the dropdown menu on hover */
+		.dropdown:hover .dropdown-content {display: block;}
+
+		/* Change the background color of the dropdown button when the dropdown content is shown */
+		.dropdown:hover .dropbtn {background-color: #3e8e41;}
     </style>
 </head>
 <body>
@@ -37,10 +64,10 @@
 		<a href="#" class="brand-logo">Tech Invasion</a>
 		<a href="#" data-target="nav-side" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 		<ul id="nav-main" class="mainnav right hide-on-med-and-down">
-			<li class="active"><a href="/">Home</a></li>
+			<li><a href="/">Home</a></li>
 			<li><a href="/map">Map</a></li>
 			<li><a href="/session">Session</a></li>
-			<li class="nav--ticket"></li>
+			<li class="active"><a href="/ticket">My Ticket</a></li>
 			<li class="dropdown">
 				<a class="nav-main--profile dropdown-btn" href="#!" ></a>
 				<ul class="dropdown-container nav-main">
@@ -51,10 +78,10 @@
 		</div>
 	</nav> 
 	<ul class="sidenav" id="nav-side">
-		<li class="active"><a href="/">Home</a></li>
+		<li><a href="/">Home</a></li>
 		<li><a href="/map">Map</a></li>
 		<li><a href="/session">Session</a></li>
-		<li class="nav--ticket"></li>
+		<li class="active"><a href="/ticket">My Ticket</a></li>
 		
 		<div class="row nav-side--profile dropdown-btn" >
 			<div class="nav-side--profile_img col s3"></div>
@@ -67,8 +94,8 @@
     </ul> 
 
     <div class="container">
-        <div class="qr-container">
-            <div class="head row pink darken-2 white-text">
+        <div class="qr-container z-depth-3">
+            <div class="head row  red accent-2 white-text">
                 <div class="col s12 m12 l12">
                     <h2 class="center-align">Tech Invasion Ticket</h2>
                 </div>

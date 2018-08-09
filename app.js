@@ -71,6 +71,10 @@ app.get('/', (req, res) => {
 app.get('/protect', validateFirebaseIdToken, (req, res) => {
     res.render("protect")
     console.log("USER CURRENT: ",req.user)
-} )
+})
 
+app.get('/private', validateFirebaseIdToken, (req, res) => {
+  res.render("protect")
+  console.log("PRIVATE: ",req.user)
+})
 app.listen(port, function() {console.log('Server start at port '+port)})

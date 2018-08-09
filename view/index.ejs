@@ -12,7 +12,38 @@
 	<!--Let browser know website is optimized for mobile-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.2.0/firebaseui.css" />
+	<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.2.0/firebaseui.css" />
+	
+	<style>
+		img.profile {
+			width: 40px;
+			height: 40px;
+			vertical-align: middle;
+		}
+		.nav-main--profile {
+			padding-left: 0.75rem;
+			padding-right: 0.75rem;
+		}
+		/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+		.dropdown-container.nav-side {
+			display: none;
+			padding-left: 8px;
+		}
+		.dropdown-container.nav-main {
+			display: none;
+			position: absolute;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			z-index: 1;
+			right: 0;
+		}
+		.dropdown-container a:hover {background-color: #ddd;}
+		/* Show the dropdown menu on hover */
+		.dropdown:hover .dropdown-content {display: block;}
+
+		/* Change the background color of the dropdown button when the dropdown content is shown */
+		.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+	</style>
 	
 </head>
 <body>
@@ -20,55 +51,69 @@
 	<nav>
 		<div class="nav-wrapper cyan">
 		<a href="#" class="brand-logo">Logo</a>
-		<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-		<ul id="nav-mobile" class="right hide-on-med-and-down">
+		<a href="#" data-target="nav-side" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+		<ul id="nav-main" class="mainnav right hide-on-med-and-down">
 			<li class="active"><a href="/">Home</a></li>
 			<li><a href="/map">Map</a></li>
 			<li><a href="/session">Session</a></li>
+			<li class="nav--ticket"></li>
+			<li class="dropdown">
+				<a class="nav-main--profile dropdown-btn" href="#!" ></a>
+				<ul class="dropdown-container nav-main">
+					<li><a onClick="signOut()" href="#" class="black-text">Logout</a></li>
+				</ul>
+			</li>
 		</ul>
 		</div>
 	</nav> 
-	<ul class="sidenav" id="mobile-demo">
+	<ul class="sidenav" id="nav-side">
 		<li class="active"><a href="/">Home</a></li>
 		<li><a href="/map">Map</a></li>
 		<li><a href="/session">Session</a></li>
-	</ul>       
+		<li class="nav--ticket"></li>
+		
+		<div class="row nav-side--profile dropdown-btn" >
+			<div class="nav-side--profile_img col s3"></div>
+			<div class="nav-side--profile_name col s9"></div>
+		</div>
+		
+		<ul class="dropdown-container nav-side">
+			<li><a onClick="signOut()" href="#">Logout</a></li>
+		</ul>
+	</ul>   
+	    
 
 	<!-- Main -->
 	<div class="container">
 		<div id="firebaseui-auth-container"></div>
 		<div id="sign-in"></div>
 		<div id="account-details"></div>
-		<p>
-			Sending XHR with "Authorization" header to:<br>
-			<span id="demo-url"></span><br><br>
-			Response: <span id="demo-response">...</span>
-		</p>
-
-		<hr />
-
-		<p>
-			Sending XHR with "__session" cookie to:<br>
-			<span id="demo-url-cookie"></span><br><br>
-			Response: <span id="demo-response-cookie">...</span>
-		</p>
+		
 	</div>
 
 
 	<!--Firebase auth setup-->
 	<script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>	
 	<script src="https://cdn.firebase.com/libs/firebaseui/3.2.0/firebaseui.js"></script>
+
 	<script src="/js/main.js"></script>
     
 
 	
 	<!-- Materialize CSS -->
+	    
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+	<script type = "text/javascript"
+         src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>  
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
 			var elems = document.querySelectorAll('.sidenav');
 			var instances = M.Sidenav.init(elems);
+			var elems2 = document.querySelectorAll('.dropdown-trigger');
+    		var instances2 = M.Dropdown.init(elems2, {hover: true});
 		});
+
+		
 
 	</script>
 </body>

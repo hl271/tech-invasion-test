@@ -97,6 +97,7 @@ initApp = function() {
   firebase.auth().onAuthStateChanged(user => {
     if(user) {
       signedInUi(user.displayName, user.photoURL)
+      startFunctionsCookieRequest()
     }
     else {
       signedOutUi()

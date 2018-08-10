@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>My Admin</title>
+    <title>Admin Request</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
@@ -34,7 +34,19 @@
             background-color: #fff;
         }
 
-		
+		#preloader {
+			margin: 20px;
+			text-align: center;
+		}
+		#preloader .preloader-wrapper {
+			margin: 0 auto;
+		}
+        /* @media only screen and (min-width: 651px) {
+            .container {
+                width: 98%;
+            }
+        } */
+            
     </style>
 </head>
 <body>
@@ -71,37 +83,13 @@
 		</ul>
 	</ul>  
     <div class="container">
+		
 		<div class="row">
-			<div class="col s12 m12">
-				<h4>Add new session to firebase DB</h4>
-				<div class="row">
-					<form class="col s12" name="addNewSessionForm">
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="name" type="text" class="validate" name="name">
-								<label for="name">Session Name</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="imgURL" type="text" class="validate" name="imgURL">
-								<label for="imgURL">Image URL</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<textarea id="textarea1" class="materialize-textarea" name="description"></textarea>
-								<label for="textarea1">Description</label>
-							</div>
-						</div>
-						<button class="btn waves-effect waves-light" type="button" onclick="addNewSession()">Submit
-							<i class="material-icons right">send</i>
-						</button>
-					</form>
-				</div>
+			<div class="col s12 m12 center-align">
+				<h4>Want to be an admin?</h4>
+				<button class="btn waves-effect waves-light">Send Admin Request <i class="material-icons right">send</i></button>
 			</div>
 		</div>
-        <div class="row session-list"></div>
 		
         
         
@@ -117,7 +105,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
     
     <script src="/js/main.js"></script>
-    <script src="/js/admin-session.js"></script>
+    <!-- <script src="/js/admin-session.js"></script> -->
     
 </body>
 </html>

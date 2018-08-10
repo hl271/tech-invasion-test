@@ -12,22 +12,7 @@
     <!--Import materialize.css-->
 	<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"  media="screen,projection"/>
     <style>
-        .qr-container {
-            margin: 20px;
-            border-radius: 5px;
-            border: 1px solid #e2e2e2;
-        }
-        .qr-container .head {
-            border: 1px solid #e2e2e2;
-            border-top-right-radius: 5px;
-            border-top-left-radius: 5px;
-        }
-        .qr-container .body {
-            text-align: center;
-        }
-        .qr-container .body .col {
-            height: 100%;
-        }
+        
         img.profile {
 			width: 40px;
 			height: 40px;
@@ -37,7 +22,31 @@
 			padding-left: 0.75rem;
 			padding-right: 0.75rem;
 		}
-		
+		.session-container {
+			border: 1px solid #e2e2e2;
+			border-radius: 5px;
+		}
+        
+        .card-panel {
+            padding: 20px;
+            margin: 0.5rem 0 1rem 0;
+            border-radius: 2px;
+            background-color: #fff;
+        }
+
+		#preloader {
+			margin: 20px;
+			text-align: center;
+		}
+		#preloader .preloader-wrapper {
+			margin: 0 auto;
+		}
+        /* @media only screen and (min-width: 651px) {
+            .container {
+                width: 98%;
+            }
+        } */
+            
     </style>
 </head>
 <body>
@@ -50,8 +59,8 @@
 			<li><a href="/">Home</a></li>
 			<li><a href="/map">Map</a></li>
 			<li><a href="/session">Session</a></li>
-			<li class="nav--ticket active"></li>
-			<li class="nav--my-session"></li>
+			<li class="nav--ticket"></li>
+			<li class="nav--my-session active"></li>
 			<li><a class="nav-main--profile dropdown-trigger" href="#!" data-target="dropdown1"></a></li>
 			<ul id="dropdown1" class="dropdown-content">
 				<li><a onClick="signOut()" href="#">Logout</a></li>
@@ -63,8 +72,8 @@
 		<li><a href="/">Home</a></li>
 		<li><a href="/map">Map</a></li>
 		<li><a href="/session">Session</a></li>
-		<li class="nav--ticket active"></li>
-		<li class="nav--my-session"></li>
+		<li class="nav--ticket"></li>
+        <li class="nav--my-session active"></li>
 		
 		<div class="row nav-side--profile dropdown-btn" >
 			<div class="nav-side--profile_img col s3"></div>
@@ -74,25 +83,54 @@
 		<ul class="dropdown-container nav-side">
 			<li><a onClick="signOut()" href="#">Logout</a></li>
 		</ul>
-	</ul>   
-
+	</ul>  
     <div class="container">
-        <div class="qr-container z-depth-3">
-            <div class="head row  red accent-2 white-text">
-                <div class="col s12 m12 l12">
-                    <h2 class="center-align">Tech Invasion Ticket</h2>
-                </div>
-            </div>
-            <div class="body row">
-                <div class="col s12 m8">
-                    <h3><%=user.name%></h3>
-                    <p><%=user.email%></p>
-                </div>
-                <div class="col s12 m4">
-                    <img class="responsive-img" src="<%=imgURL%>"/>
-                </div>
-            </div>
-        </div>
+		<div id="preloader">
+				<div class="preloader-wrapper big active">
+					<div class="spinner-layer spinner-blue">
+						<div class="circle-clipper left">
+						<div class="circle"></div>
+						</div><div class="gap-patch">
+						<div class="circle"></div>
+						</div><div class="circle-clipper right">
+						<div class="circle"></div>
+						</div>
+					</div>
+				
+					<div class="spinner-layer spinner-red">
+						<div class="circle-clipper left">
+						<div class="circle"></div>
+						</div><div class="gap-patch">
+						<div class="circle"></div>
+						</div><div class="circle-clipper right">
+						<div class="circle"></div>
+						</div>
+					</div>
+				
+					<div class="spinner-layer spinner-yellow">
+						<div class="circle-clipper left">
+						<div class="circle"></div>
+						</div><div class="gap-patch">
+						<div class="circle"></div>
+						</div><div class="circle-clipper right">
+						<div class="circle"></div>
+						</div>
+					</div>
+				
+					<div class="spinner-layer spinner-green">
+						<div class="circle-clipper left">
+						<div class="circle"></div>
+						</div><div class="gap-patch">
+						<div class="circle"></div>
+						</div><div class="circle-clipper right">
+						<div class="circle"></div>
+						</div>
+					</div>
+				</div>
+		</div>
+        <div class="row user-session-list"></div>
+		
+        
         
     </div>
     <!-- Firebase App is always required and must be first -->
@@ -106,6 +144,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
     
     <script src="/js/main.js"></script>
+    <script src="/js/user-session.js"></script>
     
 </body>
 </html>

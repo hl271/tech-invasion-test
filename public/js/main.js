@@ -15,6 +15,7 @@ let navMainProfile = document.querySelector(".nav-main--profile")
 let navSideProfileImg = document.querySelector(".nav-side--profile_img")
 let navSideProfileName = document.querySelector(".nav-side--profile_name")
 let navTickets = document.querySelectorAll(".nav--ticket")
+let navMySessions = document.querySelectorAll(".nav--my-session")
 
 //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
 var dropdown = document.getElementsByClassName("dropdown-btn");
@@ -37,6 +38,7 @@ let signedOutUi = function() {
   navSideProfileImg.innerHTML = ''
   navSideProfileName.innerHTML=''
   navTickets.forEach(nav => nav.innerHTML='')
+  navMySessions.forEach(nav => nav.innerHTML='')
 }
 
 let signedInUi = function(displayName, photoURL) {
@@ -44,6 +46,9 @@ let signedInUi = function(displayName, photoURL) {
   navSideProfileImg.innerHTML = `<img src="${photoURL}" alt="${displayName}" class="profile circle responsive-img right">`
   navSideProfileName.innerHTML = displayName
   navTickets.forEach(nav => nav.innerHTML = '<a href="/ticket">My Ticket</a>')
+  navMySessions.forEach(nav => nav.innerHTML = '<a href="/mysession">My Session</a>')
+  var elems2 = document.querySelectorAll('.dropdown-trigger');
+  var instances2 = M.Dropdown.init(elems2, {hover: true, coverTrigger: false});
 }
 
 let startFunctionsRequest = function(url) {
@@ -85,47 +90,25 @@ function signOut() {
     firebase.auth().signOut();
     // clear the __session cookie
     document.cookie = '__session=';
-    window.localStorage.setItem('currentUser', null)
     window.location.reload(true)
 }
 
 initApp = function() {
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        window.localStorage.setItem('currentUser', JSON.stringify(user))
-        var displayName = user.displayName;
-        var email = user.email;
-        var emailVerified = user.emailVerified;
-        var photoURL = user.photoURL;
-        var uid = user.uid;
-        var phoneNumber = user.phoneNumber;
-        var providerData = user.providerData;
-        
-        user.getIdToken().then(function(accessToken) {
-            signedInUi(displayName, photoURL)
-            // startFunctionsRequest('/protect')
-            startFunctionsCookieRequest()
-        });
-      } else {
-        // User is signed out.
-        document.getElementById('sign-in').textContent = ""
-        var ui = new firebaseui.auth.AuthUI(firebase.auth());
-        ui.start('#firebaseui-auth-container', {
-            signInSuccessUrl: '/',
-            signInOptions: [
-            // Leave the lines as is for the providers you want to offer your users.
-            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            firebase.auth.FacebookAuthProvider.PROVIDER_ID
-            ],
-            signInFlow: 'popup'
-        });
-      }
-    }, function(error) {
-      console.log(error);
-    });
-  };
+  firebase.auth().onAuthStateChanged(user => {
+    if(user) {
+      signedInUi(user.displayName, user.photoURL)
+    }
+    else {
+      signedOutUi()
+    }
+  })
+}
 
-  window.addEventListener('load', function() {
-    initApp()
-  });
+
+window.addEventListener('load', function() {
+  initApp()
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  M.AutoInit()
+});

@@ -24,6 +24,7 @@
 			padding-left: 0.75rem;
 			padding-right: 0.75rem;
 		}
+		
 		/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
 		.dropdown-container.nav-side {
 			display: none;
@@ -57,12 +58,11 @@
 			<li><a href="/map">Map</a></li>
 			<li><a href="/session">Session</a></li>
 			<li class="nav--ticket"></li>
-			<li class="dropdown">
-				<a class="nav-main--profile dropdown-btn" href="#!" ></a>
-				<ul class="dropdown-container nav-main">
-					<li><a onClick="signOut()" href="#" class="black-text">Logout</a></li>
-				</ul>
-			</li>
+			<li class="nav--my-session"></li>
+			<li><a class="nav-main--profile dropdown-trigger" href="#!" data-target="dropdown1"></a></li>
+			<ul id="dropdown1" class="dropdown-content">
+				<li><a onClick="signOut()" href="#">Logout</a></li>
+			</ul>
 		</ul>
 		</div>
 	</nav> 
@@ -71,6 +71,7 @@
 		<li><a href="/map">Map</a></li>
 		<li><a href="/session">Session</a></li>
 		<li class="nav--ticket"></li>
+		<li class="nav--my-session"></li>
 		
 		<div class="row nav-side--profile dropdown-btn" >
 			<div class="nav-side--profile_img col s3"></div>
@@ -103,19 +104,13 @@
 	<script src="\libs\firebaseui\dist\firebaseui.js"></script>
 
 	<script src="/js/main.js"></script>
+	<script src="/js/home.js"></script>
     
 
 	
 	<!-- Materialize CSS -->	    
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
 	
-	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			var elems = document.querySelectorAll('.sidenav');
-			var instances = M.Sidenav.init(elems);
-			var elems2 = document.querySelectorAll('.dropdown-trigger');
-    		var instances2 = M.Dropdown.init(elems2, {hover: true});
-		});
-	</script>
+	
 </body>
 </html>

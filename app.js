@@ -88,6 +88,14 @@ app.get('/ticket', validateFirebaseIdToken, (req, res) => {
       user: req.user
     })
   }) 
-  // res.render("ticket") 
+})
+app.get('/session', (req, res) => {
+  res.render("session")
+})
+app.get('/mysession', validateFirebaseIdToken, (req, res) => {
+  res.render('user-session')
+})
+app.get('/admin/session', validateFirebaseIdToken, (req, res) => {
+  res.render('admin-session')
 })
 app.listen(port, function() {console.log('Server start at port '+port)})

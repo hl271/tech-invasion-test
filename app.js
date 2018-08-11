@@ -125,6 +125,10 @@ app.get('/ticket', validateFirebaseIdToken, (req, res) => {
     })
   }) 
 })
+
+app.get('/privacy', (req, res) => {
+  res.render('privacy')
+})
 app.get('/session', (req, res) => {
   res.render("session")
 })

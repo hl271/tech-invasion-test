@@ -6,19 +6,20 @@ const QRCode = require('qrcode')
 const cookieParser = require('cookie-parser')();
 const cors = require('cors')({origin: true});
 
+let app = express()
+let port = process.env.PORT || 5000
+
 admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.projectId,
     clientEmail: process.env.clientEmail,
+    // privateKey: process.env.privateKey
     privateKey: process.env.privateKey.replace(/\\n/g, '\n')
   }),
   databaseURL: process.env.databaseURL
 })
 
-let app = express()
-let port = process.env.PORT || 5000
 let db = admin.database()
-let usersRef = db.ref('users/')
 
 app.use(express.static('public'))
 // app.use(favicon('/img/favicon.ico'))

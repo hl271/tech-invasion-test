@@ -9,15 +9,17 @@ const cors = require('cors')({origin: true});
 let app = express()
 let port = process.env.PORT || 5000
 
-
 admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.projectId,
-      clientEmail: process.env.clientEmail,
-      privateKey: process.env.privateKey.replace(/\\n/g, '\n')
-    }),
-    databaseURL: process.env.databaseURL
-  })
+  credential: admin.credential.cert({
+    projectId: process.env.projectId,
+    clientEmail: process.env.clientEmail,
+    // privateKey: process.env.privateKey
+    privateKey: process.env.privateKey.replace(/\\n/g, '\n')
+  }),
+  databaseURL: process.env.databaseURL
+})
+
+let db = admin.database()
 
 app.use(express.static('public'))
 // app.use(favicon('/img/favicon.ico'))
@@ -117,7 +119,7 @@ app.get('/protect', validateFirebaseIdToken, (req, res) => {
 
 
 app.get('/ticket', validateFirebaseIdToken, (req, res) => {
-  QRCode.toDataURL(req.user.user_id, {width: '200px'}, (error, url) => {
+  QRCode.toDataURL(`http://localhost:2000/checkin/${req.user.user_id}`, {width: '200px'}, (error, url) => {
     console.log(req.user.user_id)
     res.render("ticket", {
       imgURL: url,
@@ -137,11 +139,47 @@ app.get('/mysession', validateFirebaseIdToken, (req, res) => {
   res.render('user-session')
 })
 
+app.get('/checkin/:id', (req, res) => {
+  let id = req.params.id
+  let userRef = db.ref(`users/${id}/`)
+  userRef.once('value', user => {
+    if (!!user.val()) {
+      if (user.val().hasOwnProperty('checkedIn')) {res.send('User already checked in!!!')}
+      else {
+        userRef.update({checkedIn: true})
+        res.send('Checked in successfully')
+      }           
+    }
+    else {
+      res.send('No user found!!!')
+    }  
+  })
+})
+
 app.get('/myadmin-req', validateFirebaseIdToken, (req, res) => {
   res.render('admin')
 })
 
 app.get('/myadmin-main', authorizeAdminAccess, (req, res) => {
   res.render('admin-session')
+})
+
+app.get('/myadmin-main/:id', authorizeAdminAccess, (req, res) => {
+  let uid = req.params.id
+  let adminReqRef = db.ref(`admin-requests/${uid}/`)
+  adminReqRef.once('value', snapshot => {
+    if (snapshot.val()) {
+      admin.auth().setCustomUserClaims(uid, {admin: true}).then(() => {
+        console.log('Set up admin successfully')
+        adminReqRef.update({accepted: true})
+        res.send('Set up admin successfully')
+      });
+    }
+    else {
+      console.log('No user found')
+      res.send('No user found')
+    }
+  })
+  
 })
 app.listen(port, function() {console.log('Server start at port '+port)})

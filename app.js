@@ -21,6 +21,8 @@ admin.initializeApp({
 
 let db = admin.database()
 
+let db = admin.database()
+
 app.use(express.static('public'))
 // app.use(favicon('/img/favicon.ico'))
 app.set('views', './view')

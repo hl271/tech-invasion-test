@@ -13,8 +13,8 @@ admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.projectId,
     clientEmail: process.env.clientEmail,
-    privateKey: process.env.privateKey
-    // privateKey: process.env.privateKey.replace(/\\n/g, '\n')
+    // privateKey: process.env.privateKey
+    privateKey: process.env.privateKey.replace(/\\n/g, '\n')
   }),
   databaseURL: process.env.databaseURL
 })
@@ -119,7 +119,7 @@ app.get('/protect', validateFirebaseIdToken, (req, res) => {
 
 
 app.get('/ticket', validateFirebaseIdToken, (req, res) => {
-  QRCode.toDataURL(`http://localhost:2000/checkin/${req.user.user_id}`, {width: '200px'}, (error, url) => {
+  QRCode.toDataURL(`http://tech-invasion-test.herokuapp.com/checkin/${req.user.user_id}`, {width: '200px'}, (error, url) => {
     console.log(req.user.user_id)
     res.render("ticket", {
       imgURL: url,

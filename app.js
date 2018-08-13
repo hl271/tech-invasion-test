@@ -1,3 +1,4 @@
+console.log('Start app.js file')
 require('dotenv').config()
 let express = require('express')
 // let favicon = require('serve-favicon')
@@ -9,6 +10,7 @@ const cors = require('cors')({origin: true});
 let app = express()
 let port = process.env.PORT || 5000
 
+console.log('Before initialize firebase admin')
 admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.projectId,
@@ -18,11 +20,10 @@ admin.initializeApp({
   }),
   databaseURL: process.env.databaseURL
 })
+console.log('After initialize firebase admin')
 
 let db = admin.database()
-
-let db = admin.database()
-
+console.log('after call firebase db')
 app.use(express.static('public'))
 // app.use(favicon('/img/favicon.ico'))
 app.set('views', './view')
@@ -119,7 +120,7 @@ app.get('/protect', validateFirebaseIdToken, (req, res) => {
     console.log("USER CURRENT: ",req.user)
 })
 
-
+console.log('before define /ticket')
 app.get('/ticket', validateFirebaseIdToken, (req, res) => {
   QRCode.toDataURL(`http://tech-invasion-test.herokuapp.com/checkin/${req.user.user_id}`, {width: '200px'}, (error, url) => {
     console.log(req.user.user_id)

@@ -112,6 +112,7 @@ const authorizeAdminAccess = async (req, res, next) => {
 
 
 app.get('/', (req, res) => {
+  console.log('index page get called')
     res.render('index')
 })
 
@@ -130,6 +131,7 @@ app.get('/ticket', validateFirebaseIdToken, (req, res) => {
     })
   }) 
 })
+console.log('after define /ticket')
 
 app.get('/privacy', (req, res) => {
   res.render('privacy')
@@ -167,6 +169,7 @@ app.get('/myadmin-main', authorizeAdminAccess, (req, res) => {
   res.render('admin-session')
 })
 
+console.log('before define /myadmin-main')
 app.get('/myadmin-main/:id', authorizeAdminAccess, (req, res) => {
   let uid = req.params.id
   let adminReqRef = db.ref(`admin-requests/${uid}/`)
@@ -182,7 +185,7 @@ app.get('/myadmin-main/:id', authorizeAdminAccess, (req, res) => {
       console.log('No user found')
       res.send('No user found')
     }
-  })
-  
+  })  
 })
+console.log('after define /myadmin-main')
 app.listen(port, function() {console.log('Server start at port '+port)})
